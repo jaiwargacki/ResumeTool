@@ -1,0 +1,108 @@
+<h1>Resume Tool</h1>
+<hr>
+
+<form>
+    <!--Personal Info-->
+    <input id="name" type="text" placeholder="Your Name">
+    <br><br>
+    <input id="phone" type="tel" placeholder="(555) 555 - 5555">
+    <input id="email" type="email" placeholder="example@email.com">
+    <br><br>
+    <!--Objective-->
+    <input type="checkbox" name="section" value="ObjectiveSection"><span class="sectionHeader">Objective</span><br>
+    <div id="ObjectiveSection" style="display: none;">
+        <textarea placeholder="Type your objective here..."></textarea>
+    </div>
+    <br><br>
+    <!--Education-->
+    <input type="checkbox" name="section" value="EducationSection"><span class="sectionHeader">Education</span><br>
+    <div id="EducationSection" style="display: none;">
+        <button id="AddEducation">Add Education</button><br>
+        <div id="Education"></div>
+    </div>
+    <br><br>
+    <!--Skills-->
+    <input type="checkbox" name="section" value="SkillsSection"><span class="sectionHeader">Skills</span><br>
+    <div id="SkillsSection" style="display: none;">
+        <textarea></textarea>
+    </div>
+    <br><br>
+    <!--Projects-->
+    <input type="checkbox" name="section" value="ProjectsSection"><span class="sectionHeader">Projects</span><br>
+    <div id="ProjectsSection" style="display: none;">
+        <textarea></textarea>
+    </div>
+    <br><br>
+    <!--Work Experience-->
+    <input type="checkbox" name="section" value="ExperienceSection"><span class="sectionHeader">Work Experience</span><br>
+    <div id="ExperienceSection" style="display: none;">
+        <textarea></textarea>
+    </div>
+    <br><br>
+
+    <input type="submit" value="Generate">
+</form>
+
+<footer>
+    <hr>
+    <p>Author : Jai Wargacki</p>
+</footer>
+
+<style>
+    .sectionHeader {
+        font-size: 1.17em;
+        font-weight: bold;
+    }
+
+    footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+<script>
+    // Section Visibility
+    var checkboxes = document.querySelectorAll("input[type=checkbox][name=section]");
+    checkboxes.forEach(function(c) {
+        c.addEventListener('change', event => {
+            checkboxes.forEach(function(checkbox) {
+                document.getElementById(checkbox.value).style.display = checkbox.checked ? "inline" : "none";
+            })
+        });
+    });
+
+    // List Adders
+    var educationIdCount = 0;
+    document.getElementById("AddEducation").addEventListener("click", event => {
+        event.preventDefault();
+        const educationId = "education_" + educationIdCount++;
+        section = document.getElementById("Education");
+        section.innerHTML += '<div id="' + educationId + 
+            '"><br><input type="text" placeholder="Institution Name"> <input type="text" placeholder="Location"><br>' +
+            '<input type="text" placeholder="Degree & GPA"> <input type="month" placeholder="Date"><br>' +
+            '<button onclick="deleteElement(\'' + educationId + '\')">&#10006</button><br></div>';
+    });
+
+    // Delete
+    function deleteElement(id) {
+        element = document.getElementById(id);
+        element.remove();
+    }
+
+    // Submit
+    const form = document.querySelector('form')
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const resume = {};
+
+        resume.name = document.getElementById("name").value;
+        resume.phone = document.getElementById("phone").value;
+        resume.email = document.getElementById("email").value;
+
+        console.log(resume);
+    })
+</script>
